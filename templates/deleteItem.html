@@ -1,0 +1,16 @@
+{% include "header.html" %}
+<html>
+	<head>
+	</head>
+	<body>
+		<div class="deleteItem">
+			<h2>Delete Item</h2>
+			<p> Are you sure you want to delete item {{item.name}}? </p>
+			<form action="{{ url_for('deleteItem', category_name= category.name, item_name=item.name)}}" method = 'post'>
+				<input type='submit', value = 'Delete'>
+			</form>
+			</br>
+			<a href = "{{ url_for('itemDesc', category_name=category.name, item_name=item.name)}}"> Cancel </a>
+		</div>
+	</body>
+</html>

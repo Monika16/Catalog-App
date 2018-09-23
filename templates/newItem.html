@@ -1,0 +1,25 @@
+{% include "header.html" %}
+<!DOCTYPE html>
+<html>
+	<head>
+	</head>
+	<body>
+		<div class="addItem">
+			<h2>Add Item</h2>
+			<form action="{{url_for('newItem')}}" method="POST">
+				<p>Title</p>
+				<input type="text" name="title" >
+				<p>Description</p>
+				<input type="textarea" name="description">
+				<p>Category</p>
+				<select name="category">
+					{% for cat in categories %}
+						<option>{{cat.name}}</option>
+					{% endfor %}
+				</select>
+				<p><input type="Submit" value="Create"></p>
+			</form>
+			<a href="{{url_for('showCategories')}}">Cancel</a>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,83 @@
+body {
+	background-color: #D3D3D3;
+}
+
+.head {
+	width: auto;
+	height: auto;
+	background-color: #00008B;
+	overflow: auto;
+}
+
+.heading{
+	float: left;
+	margin-left: 15%;
+	background-color: #00008B;
+	color: #FFFFFF;
+}
+
+.login {
+	margin-top: 3%;
+	margin-right: 16%;
+	float: right;
+	background-color: #00008B;
+}
+
+.login button {
+	background-color: #D2691E;
+	border: none;
+	font-size: 15px;
+	padding: 5px 15px;
+}
+
+.login button a {
+	color: #FFFFFF;
+}
+
+
+a:link {
+	text-decoration: none;
+}
+
+.cat_items{
+	display: table;
+	table-layout: fixed;
+	width: 70%;
+	height: auto;
+	margin-top:5%;
+	margin-left: 15%;
+	background-color: #FFFFFF;
+	border: 1px solid #A9A9A9;
+}
+
+.catog {
+	width:10%;
+	display: table-cell;
+	background-color: #FFFFFF;
+	padding-left: 13px;
+}
+
+
+.line {
+	display: table-cell;
+	border-left: 2px dotted #7d97ad;
+	background-color: #FFFFFF;
+	width: 3%;
+}
+
+.lat_items {
+	width:30%;
+	display: table-cell;
+	border-spacing: 0;
+	background-color: #FFFFFF;
+}
+
+.item_desc, .addItem , .editItem, .deleteItem{
+	width: 70%;
+	height: auto;
+	margin-top:5%;
+	margin-left: 15%;
+	background-color: #FFFFFF;
+	padding: 3px 10px;
+	border: 1px solid #A9A9A9;
+}
