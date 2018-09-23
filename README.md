@@ -34,3 +34,11 @@ It is a RESTful web application using the Python framework Flask along with impl
 9. To view items in a particular Category - Click that particular category.
 10. To add, edit or delete any item, we have to login. To login click on the Login button in the Home Page. Now do the Google Sign-In.
 
+## Links in the App
+1. "http://localhost:8000/catalog" or "http://localhost:8000/" - Home Page
+2. "http://localhost:8000/catalog/<category_name>/items" - Items in category_name
+3. "http://localhost:8000/catalog/<category_name>/<item_name>" - item_name description
+3. "http://localhost:8000/login - login Page
+4. "http://localhost:8000/catalog/new" - Add Item
+5. "http://localhost:8000/catalog/<category_name>/<item_name>/edit" - Edit Item
+6. "http://localhost:8000/catalog/<category_name>/<item_name>/delete" - Delete Item
