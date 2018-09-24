@@ -22,6 +22,7 @@ CLIENT_ID = json.loads(
 
 app = Flask(__name__)
 
+# create database connection
 engine = create_engine('sqlite:///catalog.db',
                        connect_args={'check_same_thread': False})
 Base.metadata.bind = engine
@@ -30,7 +31,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 
-# Login method
+# Login method and create state token for anti-forgery
 @app.route('/login')
 def showLogin():
     login_session.permanent = True
@@ -48,8 +49,10 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
+    # Obtain authorization code
     code = request.data
     try:
+        # Upgrade authorization code into credentials object
         oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
@@ -59,15 +62,18 @@ def gconnect():
                     401)
         response.headers['Content-Type'] = 'application/json'
         return response
+    # Check if access token is valid
     access_token = credentials.access_token
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
            % access_token)
     h = httplib2.Http()
     result = json.loads(h.request(url, 'GET')[1])
+    # if error in response then abort
     if result.get('error') is not None:
         response = make_response(json.dumps(result.get('error')), 500)
         response.headers['Content-Type'] = 'application/json'
         return response
+    # Verify Access token is for intended user
     gplus_id = credentials.id_token['sub']
     if result['user_id'] != gplus_id:
         response = make_response(
@@ -75,6 +81,7 @@ def gconnect():
                     401)
         response.headers['Content-Type'] = 'application/json'
         return response
+    # Verify access token is valid for this app
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
                     json.dumps("Token's client ID does not match app's."),
@@ -109,6 +116,7 @@ def gconnect():
     if not user_id:
         user_id = createUser(login_session)
     login_session['user_id'] = user_id
+    # Output while logging
     output = ''
     output += '<h1>Welcome, '
     output += login_session['username']
@@ -119,6 +127,7 @@ def gconnect():
     output += 'height: 300px;border-radius: 150px;'
     output += '-webkit-border-radius: 150px;'
     output += '-moz-border-radius: 150px;"> '
+    # Message displayed on home page once logged.
     flash("You are now logged in as %s" % login_session['username'])
     print "done!"
     return output
@@ -150,7 +159,7 @@ def createUser(login_session):
     return user.id
 
 
-# Method to disconnect
+# Method to disconnect, revokes current user's token and resey thier session
 @app.route('/gdisconnect')
 def gdisconnect():
     access_token = login_session.get('access_token')
